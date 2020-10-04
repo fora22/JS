@@ -1,1 +1,3 @@
-alert("Im Working. Im JS");
+const title = document.getElementById("title");
+
+console.log(title);

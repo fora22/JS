@@ -17,15 +17,12 @@ function handleSubmit(event) {
 }
 
 function askForName() {
-    console.log("start askForName") // checking
     form.classList.add(SHOWING_CN);
     form.addEventListener("submit", handleSubmit);
 }
 
 function paingGreeting(text) {
-    console.log(form);      // checking
     form.classList.remove(SHOWING_CN);
-    console.log(form);      // checking
     greeting.classList.add(SHOWING_CN);
     greeting.innerText = `Hello ${text}`;
 }

@@ -7,4 +7,4 @@ writeStream.on('finish', () => {
 
 writeStream.write('hello!');
 writeStream.write('world!');
-writeStream.end();
+writeStream.end(); // write를 끝내고 싶다면 써야함

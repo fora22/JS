@@ -1,9 +1,10 @@
 let count = 0;
 
 export function increase() {
-  count++;
+    count++;
 }
 
 export function getCount() {
-  return count;
+    return count;
 }
+

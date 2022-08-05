@@ -16,24 +16,25 @@ const ps = fs.promises;
 //   })
 
 // 경로 탐색하여 파일리스트 불러오기
-
-
-// let sample;
-// test = ps.readdir(path.join(__dirname, 'test'))
-// .then(function(result) {
-//     sample = result;
-// })
-
-// console.log(sample);
-
-
-async function getFileList () {
-    const returnVal =  await ps.readdir(path.join(__dirname, 'test'));
+async function getFileList(folder) {
+    const returnVal =  await ps.readdir(path.join(__dirname, folder));
     return returnVal;
 }
 
+// 특정 경로 폴더 만들기
+async function makeDir(dirPath) {
+    ps.mkdir(dirPath, { recursive: true})
+    .catch(console.error);
+}
 
-getFileList();
+
+if (path.extname(__filename) in ['.mov', '.mp4']) {
+
+}
+if (path.extname(__filename) in ['.png', '.aae']) {
+
+}
+// 패턴 찾기
 
 // // reading a file
 // ps.readFile('./text.txt', 'utf8') //

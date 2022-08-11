@@ -1,48 +1,55 @@
 const path = require('path');
+const os = require('os');
 const fs = require('fs');
-const ps = fs.promises;
 
-// 경로 탐색하여 파일리스트 불러오기
-async function getFileList(folder) {
-    const returnVal =  await ps.readdir(path.join(__dirname, folder));
-    return returnVal;
+// 계획
+
+// 1. 사용자가 원하는 폴더의 이름을 받아온다
+const folder = process.argv[2];
+const workingDir = path.join(os.homedir(), 'Documents/study/JS/NodeJS_IY/7-challenge', folder);
+// console.log(folder);
+if(!folder || !fs.existsSync(workingDir)) {
+  console.error('Please enter folder name in Pictures');
+  return;
 }
 
-// 특정 경로 폴더 만들기
-async function makeDir() {
-    ps.mkdir('./test/video', {recursive: true})
-    .catch(console.error);
-    ps.mkdir('./test/captured', {recursive: true})
-    .catch(console.error);
-    ps.mkdir('./test/duplicated', {recursive: true})
-    .catch(console.error);
-}
 
-// 파일 옮기기
-function moveFile(folderName, fileName) {
-    fs.promises
-    .rename('./test/' + fileName, './test/'+ folderName + '/' + fileName)
-    .catch(console.error);
-}
+// 2. 그 폴더안에 video, captured, duplicated 폴더를 만든다
+const videoDir = path.join(workingDir, 'video');
+const caturedDir = path.join(workingDir, 'captured');
+const duplicatedDir = path.join(workingDir, 'duplicated');
 
-async function main() {
-    await makeDir();
-    const fileList = await getFileList('test');
-    for (var i in fileList) {
-        var fileName = fileList[i];
-        if (['.mov', '.mp4'].indexOf(path.extname(fileName)) != -1) {
-            await moveFile('video', fileName);    
-        }
-        if (['.png', '.aae'].indexOf(path.extname(fileName)) != -1) {
-            await moveFile('captured', fileName);
-        }
+// 폴더를 만들고 파일을 처리해줘야되기 때문에(동기적으로 해야되서) mkdirSync를 씀
+!fs.existsSync(videoDir) && fs.mkdirSync(videoDir);
+!fs.existsSync(caturedDir) && fs.mkdirSync(caturedDir);
+!fs.existsSync(duplicatedDir) && fs.mkdirSync(duplicatedDir);
 
-        // 이미지 파일 명은 _기준으로 나눠 E가 붙었는지 확인
-        var imageFile = path.basename(fileName, path.extname(fileName)).split('_')[1];
-        if (imageFile && !imageFile.includes('E')) {
-            await moveFile('duplicated', fileName);
-        }    
+
+// 3. 폴더안에 있는 파일들을 다 돌면서 해당하는 mp4/mov, png/aae, IMG_1234 (IMG_E1234)
+fs.promises
+  .readdir(workingDir) //
+  .then(processFiles)
+  .catch(console.log);
+
+
+function processFiles(files) {
+  files.forEach((file) => {
+    if (isVideoFile(file)) {
+      console.log('video', file);
+    } else if (isCapturedFile(file)) {
+      console.log('captured', file);
+    } else if (isDuplicatedFile(file)) {
+      console.log('duplicated', file);
     }
+  })
 }
 
-main();
+function isVideoFile(file){
+  return true;
+}
+function isCapturedFile(file){
+  return true;
+}
+function isDuplicatedFile(file){
+  return true;
+}

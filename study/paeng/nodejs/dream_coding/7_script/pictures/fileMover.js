@@ -1,15 +1,18 @@
+// fileMover.js
 import path from "path";
 const __dirname = path.resolve();
 import fileSystem from "fs";
 const fs = fileSystem.promises;
 
 export class MoveFiles {
-  constructor(targetDirName = "") {
+  constructor(targetDirName="", sourceDirName="") {
     this.targetDirName = targetDirName;
+    this.sourceDirName = sourceDirName;
   }
 
   async getFileNames() {
-    return await fs.readdir(path.join(__dirname, this.dirName));
+    const fileNames = await fs.readdir(path.join(__dirname, this.sourceDirName));
+    return fileNames;
   }
 
   moveFile(srcFile, targetFilePath) {
@@ -32,10 +35,10 @@ export class MoveFiles {
 
   async moveFiles(filterFunc, callback) {
     // file 이름들 가져오기
-    fileNames = await this.getFileNames();
+    const fileNames = await this.getFileNames();
 
     // 수정된 비디오만 filter
-    filteredFiles = fileNames.filter(filterFunc);
+    const filteredFiles = fileNames.filter(filterFunc);
 
     // target folder 생성
     this.makeFolder(this.targetDirName);
@@ -53,26 +56,23 @@ export class MoveFiles {
   }
 }
 
-export class moveEditedFiles extends MoveFiles {
+export class MoveEditedFiles extends MoveFiles {
   async moveFiles(filterFunc, callback) {
     // file 이름들 가져오기
-    fileNames = await this.getFileNames();
+    const fileNames = await this.getFileNames();
 
     // 수정된 비디오만 filter
-    filteredFiles = fileNames.filter(filterFunc);
+    const filteredFiles = fileNames.filter(filterFunc);
 
     // target folder 생성
     this.makeFolder(this.targetDirName);
 
     filteredFiles.forEach((file) => {
       // 원본 이미지 파일 이름 생성
-      const unEditedImgFileName = `${file.slice(0, 4)}${file.slice(
-        5,
-        undefined
-      )}`;
+      const unEditedImgFileName = `${file.slice(0, 4)}${file.slice(5,  undefined)}`;
 
       // file 이 옮겨갈 파일 경로 생성
-      const targetFilePath = path.join(__dirname, this.targetDirName, file);
+      const targetFilePath = path.join(__dirname, this.targetDirName, unEditedImgFileName);
       // file 이 경로에 없을 경우 file 이동
       if (!fileSystem.existsSync(targetFilePath)) {
         this.moveFile(file, targetFilePath);

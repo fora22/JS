@@ -14,6 +14,18 @@
             "program": "${workspaceFolder}\\debug\\app.js",
             "runtimeExecutable": "nodemon",
             "restart": true
+        }, 
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Script",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\7-script\\pictures\\pictures.js",
+            "args":["pictures"],
+            "runtimeExecutable": "node",
+            "restart": true
         }
     ]
 }

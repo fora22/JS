@@ -1,5 +1,7 @@
 // app.js
-import {MoveFiles} from './fileMover';
+
+import {MoveFiles, MoveEditedFiles} from './fileMover.js';
+import path from "path";
 
 const filterIsEditedImg = (pictureFileName) => {
   // EditedImg 만 filter 하는 함수
@@ -27,13 +29,14 @@ const main = async () => {
   const consoleMoveLog = (movedFileName, targetDirName) => {
     console.log(`move ${movedFileName} to ${targetDirName}`);
   };
-  const originalImgMover = new MoveFiles('duplicated');
+  const sourceDirName = 'test';
+  const originalImgMover = new MoveEditedFiles('duplicated', sourceDirName);
   originalImgMover.moveFiles(filterIsEditedImg, consoleMoveLog);
   
-  const videoMover = new MoveFiles('video');
+  const videoMover = new MoveFiles('video', sourceDirName);
   videoMover.moveFiles(filterIsVideo, consoleMoveLog);
 
-  const imgMover = new MoveFiles('captured');
+  const imgMover = new MoveFiles('captured', sourceDirName);
   imgMover.moveFiles(filterIsImg, consoleMoveLog);
   
 }

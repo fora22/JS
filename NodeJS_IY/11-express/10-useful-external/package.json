@@ -1,7 +1,6 @@
 {
   "name": "1-start",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "type": "module",
   "scripts": {
@@ -15,5 +14,7 @@
     "express": "^5.0.0-alpha.8",
     "helmet": "^4.6.0",
     "morgan": "^1.10.0"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }

@@ -1,8 +1,14 @@
 import express from "express";
 const app = express();
 
-app.get("/", (req, res, next) => {
-  console.log("get");
-  res.send("hi"); // 보내주지 않으면 기다리기 때문에 반드시 res 보내줘야 함.
+app.get("/sky/:id", (req, res, next) => {
+  // console.log(req.path);
+  // console.log(req.headers);
+  console.log(req.params);
+  console.log(req.params.id);
+  console.log(req.query);
+  console.log(req.query.keyword);
+
+  res.send("hi");
 });
-app.listen(8080); // Port 지정 및 시작
+app.listen(8080);

@@ -9,6 +9,9 @@ app.get("/sky/:id", (req, res, next) => {
   console.log(req.query);
   console.log(req.query.keyword);
 
-  res.send("hi");
+  // res.json({ name: "IY" }); // {"name":"IY"}
+  // res.sendStatus(400); // Bad Request
+  res.setHeader("key", "value"); // Response Headers에 포함
+  res.status(201).send("created"); // created
 });
 app.listen(8080);

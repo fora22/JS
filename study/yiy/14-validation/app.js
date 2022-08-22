@@ -17,13 +17,13 @@ app.post(
   "/users",
   [
     body("name")
-      .trim()
+      .trim() // 빈칸 제거
       .notEmpty()
       .withMessage("이름을 입력해")
       .isLength({ min: 2 })
       .withMessage("이름은 두 글자 이상!"),
     body("age").notEmpty().isInt().withMessage("숫자를 입력해"),
-    body("email").normalizeEmail().isEmail().withMessage("이메일 입력해"),
+    body("email").normalizeEmail().isEmail().withMessage("이메일 입력해"), // 대문자와 같은 이메일에 안맞는형식 변경
     body("job.name").notEmpty(),
     validate,
   ],
@@ -35,7 +35,10 @@ app.post(
 
 app.get(
   "/:email",
-  [param("email").isEmail().withMessage("이메일 입력해"), validate],
+  [
+    param("email").normalizeEmail().isEmail().withMessage("이메일 입력해"),
+    validate,
+  ],
   (req, res, next) => {
     res.send("📧");
   }

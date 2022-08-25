@@ -39,4 +39,20 @@ app.get('/', (req, res) => {
   res.send('Welcome!');
 })
 
+app.get('/paeng', (req, res) => {
+  console.log(req.body);
+  console.log(req.cookies);
+  res.send('paeng!!!!');
+})
+
+app.get('/schools', (req, res) => {
+  const schoolsData = {
+    '1': '경기대',
+    '2': '경희대',
+    '3': '서울대',
+  }
+  res.send((schoolsData));
+  // res.send(JSON.stringify(schoolsData));
+})
+
 app.listen(8080);

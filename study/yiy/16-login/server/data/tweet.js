@@ -2,7 +2,7 @@ let tweets = [
   {
     id: "1",
     text: "드림코더분들 화이팅!",
-    createdAt: Date.now().toString,
+    createdAt: new Date().toString(),
     name: "bob",
     username: "bob",
     url: "https://www.checkpoint.com/wp-content/uploads/what-is-web-application-firewall.jpg",
